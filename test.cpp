@@ -2,11 +2,14 @@
 
 using namespace std;
 
+int& doubleValue(int a) {
+	int value = a * 2;
+
+	return value;
+}
+
 int main() {
-	for(int i = 0; i < 10; ++i) {
-		cout << "\nEnter one character only: ";
-		char symbol;
-		cin >> symbol;
-	}
+	cout << doubleValue(5);
+
 	return 0;
 }
