@@ -2,47 +2,45 @@
 
 using namespace std;
 
-class Numbers {
+class Average {
 private:
-	double m_a, m_b, m_c;
-
+	int32_t m_total = 0;
+	int8_t m_numbers = 0;
 public:
-	void setValues(double a, double b, double c) {
-		m_a = a;
-		m_b = b;
-		m_c = c;
+	Average() {}
+
+	friend ostream& operator<<(ostream &out, const Average &avg) {
+		out << static_cast<double>(avg.m_total) / avg.m_numbers;
+		return out;
 	}
 
-	void print() {
-		cout << "<" << m_a << ", " << m_b << ", " << m_c << ">\n";
-	}
-
-	bool isEqual(const Numbers &nums) {
-		return (m_a == nums.m_a && m_b == nums.m_b && m_c == nums.m_c);
+	Average& operator+=(int num) {
+		m_total += num;
+		++m_numbers;
+		return *this;
 	}
 };
 
-int main(int argc, char *argv[]) {
-	Numbers point1;
-	point1.setValues(3.0, 4.0, 5.0);
+int main(int argc, const char *argv[]) {
+	Average avg;
 
-	Numbers point2;
-	point2.setValues(3.0, 4.0, 5.0);
+	avg += 5;
+	cout << avg << '\n'; // 5 / 1 = 5
 
-	if(point1.isEqual(point2))
-		cout << "point1 and point2 are equal\n";
-	else
-		cout << "point1 and point2 aren't equal\n";
+	avg += 9;
+	cout << avg << '\n'; // (5 + 9) / 2 = 7
 
-	Numbers point3;
-	point3.setValues(7.0, 8.0, 9.0);
+	avg += 19;
+	cout << avg << '\n'; // (5 + 9 + 19) / 3 = 11
 
-	if(point1.isEqual(point3))
-		cout << "point1 and point3 are equal\n";
-	else
-		cout << "point1 and point3 aren't equal\n";
+	avg += -9;
+	cout << avg << '\n'; // (5 + 9 + 19 - 9) / 4 = 6
+
+	(avg += 7) += 11;
+	cout << avg << '\n'; // (5 + 9 + 19 - 9 + 7 + 11) / 6 = 7
+
+	Average copy = avg;
+	cout << copy << '\n';
 	
 	return 0;
 }
-
-// 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
